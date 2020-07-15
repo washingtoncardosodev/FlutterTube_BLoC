@@ -49,8 +49,10 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search), 
             onPressed: () async {
+              // Recupera/Pega os dados digitados no close do search delegate
               String result = await showSearch(context: context, delegate: DataSearch());
               if(result != null){
+                // Adiciona os dados digitados no _videosStreamController
                 blocVideo.inSearch.add(result);
               }
             }
@@ -63,9 +65,8 @@ class HomeScreen extends StatelessWidget {
         stream: blocVideo.outVideos,
         builder: (context, snapshot){
           if(snapshot.hasData){
-            print('length ${snapshot.data.length}');
             return ListView.builder(
-              itemCount: snapshot.data.length + 1,
+              itemCount: snapshot.data.length + 1, // macete para carregar os proximos videos
               itemBuilder: (context, index){
                 if(index < snapshot.data.length){
                   return VideoTile(snapshot.data[index]);

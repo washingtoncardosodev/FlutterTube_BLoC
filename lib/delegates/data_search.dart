@@ -32,16 +32,16 @@ class DataSearch extends SearchDelegate<String> {
     );
   }
   
-  // Exibe os resultados da pesquisa em outra tela
+  // Constroi a tela com base no resultado da pesquisa
   @override
-  Widget buildResults(BuildContext context) {    
+  Widget buildResults(BuildContext context) {  
+    // Para retornar os dado em uma outra tela temos que fazer essa "gambiarra"  
     Future.delayed(Duration.zero).then((_) => close(context, query));
     return Container();
   }
   
   // Ao digitar exibe as sugestões de pesquisa na mesma tela 
   // Ao digitar qualquer coisa chama o buildSuggestions passando o query com o conteudo digitado
-  //
   @override
   Widget buildSuggestions(BuildContext context) { 
 
@@ -63,6 +63,8 @@ class DataSearch extends SearchDelegate<String> {
                   title: Text(snapshot.data[index]),
                   leading: Icon(Icons.play_arrow),
                   onTap: (){
+                    // Fecha a tela de sugestões e passa o dado digitado para o buildResults onde será contruido a tela
+                    // com o resultado da pesquisa
                     close(context, snapshot.data[index]);
                   },
                 );

@@ -7,11 +7,14 @@ const API_KEY = "AIzaSyDFqccjW58CdF88WFAymeCXPiBgzfxbTWI";
 
 class Api {
 
+  // Armazena os dados da pesquisa
   String _search;
+  // Armazena o token
   String _nextToken;
 
   Future<List<Video>>search(String search) async {
-    _search = search;
+    // Armazena os dados da pesquisa
+    this._search = search;
 
     http.Response response = await http.get(
       "https://www.googleapis.com/youtube/v3/search?part=snippet&q=$search&type=video&key=$API_KEY&maxResults=10"
@@ -26,6 +29,7 @@ class Api {
 
       var decoded = json.decode(response.body);
 
+      // Armazena o token
       _nextToken = decoded["nextPageToken"];
 
       List<Video> videos = decoded["items"].map<Video>((map) {

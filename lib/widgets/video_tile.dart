@@ -50,10 +50,12 @@ class VideoTile extends StatelessWidget {
                   builder: (context, snapshot) {
                     if(snapshot.hasData){
                       return IconButton(
-                      icon: Icon(snapshot.data.containsKey(video.id) ? Icons.star : Icons.star_border), 
+                      // Verifica se o video do youtube já esta na lista de favoritos
+                      icon: Icon(snapshot.data.containsKey(this.video.id) ? Icons.star : Icons.star_border), 
                       color: Colors.white,
                       iconSize: 30.0,
-                      onPressed: (){  
+                      onPressed: (){
+                        // Adiciona ou remove o video da lista de favoritos  
                         blocFavorite.toggleFavorite(video);
                       }
                     );

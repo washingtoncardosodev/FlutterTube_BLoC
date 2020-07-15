@@ -12,32 +12,40 @@ class VideosBloc implements BlocBase {
 
   List<Video> videos;
 
-  final _videosController = StreamController<List<Video>>();
-  Stream get outVideos => _videosController.stream;
+  // Cria o StreamController para os videos
+  final _videosStreamController = StreamController<List<Video>>();
+  // Cria a saida para os videos
+  Stream get outVideos => _videosStreamController.stream;
 
-  final _searchController = StreamController<String>();
-  Sink get inSearch => _searchController.sink;
+  // Cria o StreamController para as pesquisas
+  final _searchStreamController = StreamController<String>();
+  // Adiciona dados para o _searchStreamController
+  Sink get inSearch => _searchStreamController.sink;
 
+  // Construtor
   VideosBloc(){
     api = Api();
 
-    _searchController.stream.listen(_search);
+    // Fica observando o que vai sair do _searchStreamController
+    // Sempre que for notificado chama o metodo _search
+    _searchStreamController.stream.listen(_search);
   }
 
   void _search(String search) async {
     if(search != null){
-      _videosController.sink.add([]);
-      videos = await api.search(search);
+      _videosStreamController.sink.add([]);
+      this.videos = await api.search(search);
     } else {
-      videos += await api.nextPage();
+      this.videos += await api.nextPage();
     }
-    _videosController.sink.add(videos);
+    // Adiciona os videos no _videosStreamController
+    _videosStreamController.sink.add(videos);
   }
 
   @override
   void dispose() {
-    _videosController.close();
-    _searchController.close();
+    _videosStreamController.close();
+    _searchStreamController.close();
   }
 
 

@@ -6,8 +6,7 @@ import 'package:youtube_client/blocs/favorite_bloc.dart';
 import 'package:youtube_client/models/video_model.dart';
 
 
-class FavoritesScreen extends StatelessWidget {
-  
+class FavoritesScreen extends StatelessWidget {  
 
   @override
   Widget build(BuildContext context) {
